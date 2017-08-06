@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#313a49</color>
+    <color name="colorPrimaryDark">#313a49</color>
+    <color name="colorAccent">#000000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="gray_light">#DBDBDB</color>
+    <color name="black">#000</color>
+    <color name="transparent">#0000</color>
+
+    <color name="button_color_normal">@color/colorPrimary</color>
+    <color name="button_color_pressed">@color/colorAccent</color>
+
+
+    <color name="colorBackground">#313a49</color>
+
+
+</resources>

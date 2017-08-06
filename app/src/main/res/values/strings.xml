@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Click-Labs Workflow</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="text_ok">OK</string>
+    <string name="text_exit">Exit</string>
+    <string name="text_retry">Retry</string>
+    <string name="session_expired">Session expired.</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Image Chooser -->
+
+    <!--Error-->
+    <string name="error_email_field_empty">Please enter email address.</string>
+    <string name="error_invalid_email">Please enter valid email address.</string>
+    <string name="error_password_field_empty">Please enter password.</string>
+    <string name="error_confirm_password_field_empty">Please enter confirm password.</string>
+    <string name="error_password_must_be_greater_than_5_character">Password must be greater than 5 character.</string>
+    <string name="error_phone_number_field_empty">Please enter phone number.</string>
+    <string name="error_invalid_phone_number">Please enter valid phone number.</string>
+    <string name="error_first_name_field_empty">Please enter first name</string>
+    <string name="error_last_name_field_empty">Please enter last name</string>
+    <string name="error_first_name_two_character_long">First name must contain at least two characters</string>
+    <string name="error_last_name_two_character_long">Last name must contain at least two characters</string>
+    <string name="error_first_name_special_number_character">First name cannot contain number &amp; special characters</string>
+    <string name="error_last_name_special_number_character">Last name cannot contain number &amp; special characters</string>
+    <string name="error_password_mismatch">Password Mismatch!</string>
+    <string name="error_internet_not_connected">Not connected to internet. Please check your internet connection or try again later.</string>
+    <string name="text_close">Close</string>
+    <string name="text_select_date">Select Date</string>
+    <string name="text_add">Add</string>
+    <string name="text_save">Save</string>
+    <string name="text_old_password">Old Password</string>
+    <string name="text_new_password">New Password</string>
+    <string name="text_confirm_new_password">Confirm new password</string>
+    <string name="text_password">Password</string>
+    <string name="text_login">Login</string>
+    <string name="text_email">Email</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_task_accomplished">Task Accomplished</string>
+    <string name="text_minutes">Minutes</string>
+    <string name="text_hours">Hours</string>
+    <string name="text_select_sales_title">Select Sales Title</string>
+    <string name="text_select_project">Select Project</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_delete">Delete</string>
+    <string name="text_timesheet_details">Timesheet Details</string>
+    <string name="text_project_name">Project Name</string>
+    <string name="text_sales_order_title">Sales Order Title</string>
+    <string name="text_date">Date</string>
+    <string name="text_hours_spent">Hours Spent</string>
+    <string name="text_search">Search</string>
+    <string name="text_toast_with_diffrent_dates">You can not add timesheet with different dates</string>
+    <string name="text_timesheet_added_successfully">Timesheet Added Successfully</string>
+    <string name="text_add_more">Add More</string>
+    <string name="text_error_select_date_first">Please Select Date First</string>
+    <string name="text_password_changed_successfully">Password Changed Successfully</string>
+    <string name="text_error_old_password_is_wrong">Your old password is wrong</string>
+    <string name="text_about">Click-Labs\n\nDeveloped By : Amanjot Singh\namanjot.singh@click-labs.com</string>
+    <string name="text_are_you_sure_to_logout">Are you sure you want to log out?</string>
+    <string name="text_toast_logged_in_succsefull">Logged in Successful !</string>
+    <string name="text_toast_timesheet_edited">Timesheet Edited Successfully</string>
+    <string name="text_error_select_project_first">Please Select Project First</string>
+    <string name="text_select_hours_spent">Select Hours Spent</string>
+    <string name="text_select_minutes_spent">Select Minutes Spent</string>
+    <string name="text_hrs">hrs</string>
+    <string name="text_toast_timesheet_deleted_succsfully">Timesheet Deleted Successfully</string>
+    <string name="text_are_you_sure_to_delete">Are you sure to delete this timesheet ?</string>
+    <string name="text_delete_timesheet">Delete Timesheet</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+</resources>
