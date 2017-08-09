@@ -42,7 +42,7 @@ public class TimesheetDetailsFragment extends DialogFragment implements View.OnC
     private Dialog mDialog;
     private Call retrofit;
     private Activity activity;
-    private AddTimesheetFragment.OnEditListner onEditListner;
+    private AddTimesheetFragment.OnEditListener onEditListener;
     private OnDeleteListner onDeleteListner;
     private Datum timeSheetDetails;
 
@@ -60,8 +60,8 @@ public class TimesheetDetailsFragment extends DialogFragment implements View.OnC
         return timesheetDetailsFragment;
     }
 
-    public void setOnEditListner(AddTimesheetFragment.OnEditListner onEditListner) {
-        this.onEditListner = onEditListner;
+    public void setOnEditListener(AddTimesheetFragment.OnEditListener onEditListener) {
+        this.onEditListener = onEditListener;
     }
 
     public void setOnDeleteListner(OnDeleteListner onDeleteListner) {
@@ -240,7 +240,7 @@ public class TimesheetDetailsFragment extends DialogFragment implements View.OnC
     private void openEditTimesheetFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         AddTimesheetFragment addTimesheetFragment = new AddTimesheetFragment();
-        addTimesheetFragment.newInstance(timeSheetDetails, true, activity, onEditListner);
+        addTimesheetFragment.newInstance(timeSheetDetails, true, activity, onEditListener);
         addTimesheetFragment.setCancelable(false);
         addTimesheetFragment.show(fm, "edit_timesheet");
         dismiss();

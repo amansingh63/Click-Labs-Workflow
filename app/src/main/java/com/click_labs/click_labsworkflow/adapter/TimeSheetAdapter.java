@@ -23,13 +23,13 @@ import java.util.List;
 public class TimeSheetAdapter extends RecyclerView.Adapter<TimeSheetAdapter.MyViewHolder> {
 
 
-    Activity activity;
-    List<Datum> timeSheetList;
-    AddTimesheetFragment.OnEditListner onEditListner;
-    TimesheetDetailsFragment.OnDeleteListner onDeleteListner;
+    private Activity activity;
+    private List<Datum> timeSheetList;
+    private AddTimesheetFragment.OnEditListener onEditListener;
+    private TimesheetDetailsFragment.OnDeleteListner onDeleteListner;
 
-    public TimeSheetAdapter(Activity activity, List<Datum> timeSheetList, AddTimesheetFragment.OnEditListner onEditListner, TimesheetDetailsFragment.OnDeleteListner onDeleteListner) {
-        this.onEditListner = onEditListner;
+    public TimeSheetAdapter(Activity activity, List<Datum> timeSheetList, AddTimesheetFragment.OnEditListener onEditListener, TimesheetDetailsFragment.OnDeleteListner onDeleteListner) {
+        this.onEditListener = onEditListener;
         this.onDeleteListner = onDeleteListner;
         this.activity = activity;
         this.timeSheetList = timeSheetList;
@@ -63,7 +63,7 @@ public class TimeSheetAdapter extends RecyclerView.Adapter<TimeSheetAdapter.MyVi
     private void showDetails(Datum timeSheetDetails) {
         FragmentManager fm = ((HomeActivity) activity).getSupportFragmentManager();
         TimesheetDetailsFragment fragment = TimesheetDetailsFragment.newInstance(timeSheetDetails);
-        fragment.setOnEditListner(onEditListner);
+        fragment.setOnEditListener(onEditListener);
         fragment.setOnDeleteListner(onDeleteListner);
         fragment.setActivity(activity);
         fragment.show(fm, "timesheet_details");

@@ -41,8 +41,8 @@ import retrofit2.Call;
 
 public class AddTimesheetFragment extends DialogFragment implements View.OnClickListener {
 
-    private OnEditListner onEditListner;
-    private OnDataSubmitListner onDataSubmitListner;
+    private OnEditListener onEditListener;
+    private OnDataSubmitListener onDataSubmitListener;
     private MaterialEditText etProjectName, etSalesTitle, etHours, etMinutes, etTask;
     private Button btnSave, btnCancel;
     private Datum timeSheetDetails;
@@ -57,16 +57,16 @@ public class AddTimesheetFragment extends DialogFragment implements View.OnClick
     }
 
 
-    public AddTimesheetFragment newInstance(Activity activity, OnDataSubmitListner onDataSubmitListner) {
+    public AddTimesheetFragment newInstance(Activity activity, OnDataSubmitListener onDataSubmitListener) {
         this.activity = activity;
-        this.onDataSubmitListner = onDataSubmitListner;
+        this.onDataSubmitListener = onDataSubmitListener;
         return this;
     }
 
-    public AddTimesheetFragment newInstance(Datum timeSheetDetails, Boolean isEdit, Activity activity, OnEditListner onEditListner) {
+    public AddTimesheetFragment newInstance(Datum timeSheetDetails, Boolean isEdit, Activity activity, OnEditListener onEditListener) {
         this.activity = activity;
         this.isEdit = isEdit;
-        this.onEditListner = onEditListner;
+        this.onEditListener = onEditListener;
         this.timeSheetDetails = timeSheetDetails;
         return this;
     }
@@ -169,7 +169,7 @@ public class AddTimesheetFragment extends DialogFragment implements View.OnClick
             @Override
             public void success(CommonReponse commonReponse) {
                 Toast.makeText(activity, R.string.text_toast_timesheet_edited, Toast.LENGTH_SHORT).show();
-                onEditListner.onEdit();
+                onEditListener.onEdit();
             }
 
             @Override
@@ -276,7 +276,7 @@ public class AddTimesheetFragment extends DialogFragment implements View.OnClick
                         if (!isEdit) {
                             try {
                                 JSONObject jsonObject = addToJsonObject();
-                                onDataSubmitListner.onDataSubmitListner(jsonObject, etProjectName.getText().toString());
+                                onDataSubmitListener.onDataSubmitListener(jsonObject, etProjectName.getText().toString());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -339,12 +339,12 @@ public class AddTimesheetFragment extends DialogFragment implements View.OnClick
     }
 
 
-    public interface OnDataSubmitListner {
+    public interface OnDataSubmitListener {
 
-        public void onDataSubmitListner(JSONObject jsonObject, String projectName);
+        public void onDataSubmitListener(JSONObject jsonObject, String projectName);
     }
 
-    public interface OnEditListner {
+    public interface OnEditListener {
         public void onEdit();
     }
 

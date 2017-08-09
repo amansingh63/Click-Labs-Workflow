@@ -18,25 +18,6 @@ public final class CommonData implements PaperDbConstant {
     }
 
     /**
-     * Update fcm token.
-     *
-     * @param token the token
-     */
-//======================================== FCM token ==============================================
-    public static void updateFCMToken(final String token) {
-        Paper.book().write(PAPER_DEVICE_TOKEN, token);
-    }
-
-    /**
-     * Gets fcm token.
-     *
-     * @return the fcm token
-     */
-    public static String getFCMToken() {
-        return Paper.book().read(PAPER_DEVICE_TOKEN);
-    }
-
-    /**
      * Save access token.
      *
      * @param accessToken the access token

@@ -36,14 +36,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-
-
         etOldPassword = (MaterialEditText) findViewById(R.id.et_old_password);
         etNewPassword = (MaterialEditText) findViewById(R.id.et_new_password);
         etConfirmPassword = (MaterialEditText) findViewById(R.id.et_confirm_password);
         btnSave = (Button) findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
-
         EditTextUtil.setIgnoreFirstWhiteSpace(etOldPassword);
         EditTextUtil.setIgnoreFirstWhiteSpace(etNewPassword);
         EditTextUtil.setIgnoreFirstWhiteSpace(etConfirmPassword);

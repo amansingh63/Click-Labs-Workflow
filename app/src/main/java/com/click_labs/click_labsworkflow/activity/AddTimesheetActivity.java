@@ -99,9 +99,9 @@ public class AddTimesheetActivity extends AppCompatActivity implements View.OnCl
                     if (Util.isNetworkAvailable(this)) {
                         FragmentManager fm = getSupportFragmentManager();
                         AddTimesheetFragment fragment = new AddTimesheetFragment();
-                        fragment.newInstance(this, new AddTimesheetFragment.OnDataSubmitListner() {
+                        fragment.newInstance(this, new AddTimesheetFragment.OnDataSubmitListener() {
                             @Override
-                            public void onDataSubmitListner(JSONObject jsonObject, String projectName) {
+                            public void onDataSubmitListener(JSONObject jsonObject, String projectName) {
                                 jsonArray.put(jsonObject);
                                 Log.v("JSON  ===", jsonArray.toString());
                                 Toast.makeText(AddTimesheetActivity.this, R.string.text_timesheet_added_successfully, Toast.LENGTH_SHORT).show();

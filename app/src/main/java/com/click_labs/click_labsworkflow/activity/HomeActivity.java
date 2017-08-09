@@ -136,7 +136,7 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void success(TimesheetResponseData timesheetResponseData) {
-                timeSheetAdapter = new TimeSheetAdapter(HomeActivity.this, timesheetResponseData.getData(), new AddTimesheetFragment.OnEditListner() {
+                timeSheetAdapter = new TimeSheetAdapter(HomeActivity.this, timesheetResponseData.getData(), new AddTimesheetFragment.OnEditListener() {
                     @Override
                     public void onEdit() {
                         apiHitToGetTimeSheet();

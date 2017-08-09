@@ -2,6 +2,7 @@ package com.click_labs.click_labsworkflow.util.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,11 @@ import java.util.ArrayList;
 public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.ViewHolder> {
 
 
-    Activity activity;
-    ArrayList<String> list;
-    CustomListSelector getSelectedValue;
-    OnListItemSelectedListener onListItemSelectedListener;
-    Dialog dialog;
+    private Activity activity;
+    private ArrayList<String> list;
+    private CustomListSelector getSelectedValue;
+    private OnListItemSelectedListener onListItemSelectedListener;
+    private Dialog dialog;
 
     public CustomListAdapter(Activity activity, OnListItemSelectedListener onListItemSelectedListener, Dialog dialog) {
         this.activity = activity;
@@ -54,10 +55,15 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Vi
         holder.tvItemList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Toast.makeText(activity,list.get(holder.getAdapterPosition()),Toast.LENGTH_LONG).show();
-                onListItemSelectedListener.onListItemSelected(holder.getAdapterPosition(), list.get(holder.getAdapterPosition()));
-                dialog.dismiss();
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onListItemSelectedListener.onListItemSelected(holder.getAdapterPosition(), list.get(holder.getAdapterPosition()));
+                        dialog.dismiss();
+
+                    }
+                }, 200);
             }
         });
     }
