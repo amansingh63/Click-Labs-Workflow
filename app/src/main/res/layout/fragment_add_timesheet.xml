@@ -19,15 +19,18 @@
             android:drawableEnd="@drawable/drop_down_icon"
             android:focusable="false"
             android:hint="@string/text_select_project"
+            android:longClickable="false"
             app:met_floatingLabel="highlight" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/et_sales_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:drawableEnd="@drawable/drop_down_icon"
             android:focusable="false"
             android:hint="@string/text_select_sales_title"
+            android:longClickable="false"
             app:met_floatingLabel="highlight" />
 
         <LinearLayout
@@ -45,6 +48,7 @@
                 android:drawableEnd="@drawable/drop_down_icon"
                 android:focusable="false"
                 android:hint="@string/text_hours"
+                android:longClickable="false"
                 app:met_floatingLabel="highlight" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -56,6 +60,7 @@
                 android:drawableEnd="@drawable/drop_down_icon"
                 android:focusable="false"
                 android:hint="@string/text_minutes"
+                android:longClickable="false"
                 app:met_floatingLabel="highlight" />
 
         </LinearLayout>

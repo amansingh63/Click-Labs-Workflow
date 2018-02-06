@@ -3,6 +3,7 @@ package com.click_labs.click_labsworkflow.activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     private Button btnSave;
     private Call retofitCall;
     private Dialog mDialog;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         etConfirmPassword = (MaterialEditText) findViewById(R.id.et_confirm_password);
         btnSave = (Button) findViewById(R.id.btn_save);
         btnSave.setOnClickListener(this);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Change Password");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         EditTextUtil.setIgnoreFirstWhiteSpace(etOldPassword);
         EditTextUtil.setIgnoreFirstWhiteSpace(etNewPassword);
         EditTextUtil.setIgnoreFirstWhiteSpace(etConfirmPassword);
@@ -127,6 +135,12 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         return true;
 
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 

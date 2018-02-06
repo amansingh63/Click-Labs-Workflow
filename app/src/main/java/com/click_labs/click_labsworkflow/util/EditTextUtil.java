@@ -28,25 +28,6 @@ public final class EditTextUtil {
         }
     };
 
-    /**
-     * Empty Constructor
-     * not called
-     */
-    private EditTextUtil() {
-    }
-
-    /**
-     * @param editText instance of that edittext on which no space functionality want
-     */
-    public static void setIgnoreAllWhiteSpaces(final EditText editText) {
-        editText.setFilters(new InputFilter[]{ignoreAllWhiteSpaces});
-    }
-    public static void setIgnoreFirstWhiteSpace(final EditText editText) {
-        editText.setFilters(new InputFilter[]{ignoreFirstWhiteSpace});
-    }
-
-
-
     private static InputFilter ignoreFirstWhiteSpace = new InputFilter() {
         @Override
         public CharSequence filter(CharSequence source, int start, int end,
@@ -61,4 +42,31 @@ public final class EditTextUtil {
             return null;
         }
     };
+
+    /**
+     * Empty Constructor
+     * not called
+     */
+    private EditTextUtil() {
+    }
+
+    /**
+     * Method to set on edit text to do not permit user to enter space
+     *
+     * @param editText instance of that edittext on which no space functionality want
+     */
+    public static void setIgnoreAllWhiteSpaces(final EditText editText) {
+        editText.setFilters(new InputFilter[]{ignoreAllWhiteSpaces});
+    }
+
+    /**
+     * Method to set on edit text to do not permit user to enter space on starting of string
+     *
+     * @param editText the instance of that edittext on which no space functionality want
+     */
+    public static void setIgnoreFirstWhiteSpace(final EditText editText) {
+        editText.setFilters(new InputFilter[]{ignoreFirstWhiteSpace});
+    }
+
+
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.click_labs.click_labsworkflow.R;
-import com.click_labs.click_labsworkflow.activity.HomeActivity;
+import com.click_labs.click_labsworkflow.activity.DasboardActivity;
 import com.click_labs.click_labsworkflow.fragment.AddTimesheetFragment;
 import com.click_labs.click_labsworkflow.fragment.TimesheetDetailsFragment;
 import com.click_labs.click_labsworkflow.model.timesheetresponse.Datum;
@@ -61,7 +61,7 @@ public class TimeSheetAdapter extends RecyclerView.Adapter<TimeSheetAdapter.MyVi
     }
 
     private void showDetails(Datum timeSheetDetails) {
-        FragmentManager fm = ((HomeActivity) activity).getSupportFragmentManager();
+        FragmentManager fm = ((DasboardActivity) activity).getSupportFragmentManager();
         TimesheetDetailsFragment fragment = TimesheetDetailsFragment.newInstance(timeSheetDetails);
         fragment.setOnEditListener(onEditListener);
         fragment.setOnDeleteListner(onDeleteListner);

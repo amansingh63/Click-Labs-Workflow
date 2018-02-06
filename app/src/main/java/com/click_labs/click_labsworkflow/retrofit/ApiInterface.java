@@ -2,6 +2,7 @@ package com.click_labs.click_labsworkflow.retrofit;
 
 
 import com.click_labs.click_labsworkflow.model.commonresponse.CommonReponse;
+import com.click_labs.click_labsworkflow.model.dashboard.DashboardResponse;
 import com.click_labs.click_labsworkflow.model.loginresponse.LoginResponseData;
 import com.click_labs.click_labsworkflow.model.projectdetailsdata.ProjectDetailsResponse;
 import com.click_labs.click_labsworkflow.model.resetpassworddata.ResetPasswordResponse;
@@ -37,6 +38,9 @@ public interface ApiInterface {
 
     @GET("Employee/getcompactView")
     Call<ProjectDetailsResponse> getProjectDetails(@Header("authorization") String accessToken);
+
+    @GET("Jobs/MydashBoard")
+    Call<DashboardResponse> getDashboardDetails(@Header("authorization") String accessToken, @Query("limit") int limit, @Query("skip") int skip);
 
     @POST("Employee/employeeTimesheet")
     @FormUrlEncoded

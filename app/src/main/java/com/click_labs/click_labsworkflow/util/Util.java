@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.click_labs.click_labsworkflow.R;
@@ -67,39 +66,5 @@ public final class Util {
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         CommonData.clearData();
         mContext.startActivity(intent);
-    }
-
-    /**
-     * @param context of calling activity or fragment
-     * @return pixel scale factor
-     */
-    private static float getPixelScaleFactor(final Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT;
-    }
-
-
-    /**
-     * Method to convert dp into pixel
-     *
-     * @param context of calling activity or fragment
-     * @param dp      dp value that need to convert into px
-     * @return px converted dp into px
-     */
-    public static int dpToPx(final Context context, final int dp) {
-        int px = Math.round(dp * getPixelScaleFactor(context));
-        return px;
-    }
-
-    /**
-     * Method to convert pixel into dp
-     *
-     * @param context of calling activity or fragment
-     * @param px      pixel value that need to convert into dp
-     * @return dp converted px into dp
-     */
-    public static int pxToDp(final Context context, final int px) {
-        int dp = Math.round(px / getPixelScaleFactor(context));
-        return dp;
     }
 }

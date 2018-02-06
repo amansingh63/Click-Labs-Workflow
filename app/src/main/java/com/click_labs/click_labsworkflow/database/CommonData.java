@@ -43,6 +43,15 @@ public final class CommonData implements PaperDbConstant {
      * Delete paper.
      */
     public static void clearData() {
-        Paper.book().destroy();;
+        Paper.book().destroy();
+        ;
+    }
+
+    public static void saveUserDesignation(String designation) {
+        Paper.book().write(DESIGNATION, designation);
+    }
+
+    public static String getUserDesignation() {
+        return Paper.book().read(DESIGNATION);
     }
 }

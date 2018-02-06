@@ -7,41 +7,51 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.click_labs.click_labsworkflow.R;
+import com.click_labs.click_labsworkflow.adapter.DashboardAdapter;
 import com.click_labs.click_labsworkflow.adapter.TimeSheetAdapter;
+import com.click_labs.click_labsworkflow.constants.AppConstant;
 import com.click_labs.click_labsworkflow.database.CommonData;
 import com.click_labs.click_labsworkflow.fragment.AddTimesheetFragment;
 import com.click_labs.click_labsworkflow.fragment.TimesheetDetailsFragment;
+import com.click_labs.click_labsworkflow.model.dashboard.DashboardResponse;
 import com.click_labs.click_labsworkflow.model.timesheetresponse.TimesheetResponseData;
 import com.click_labs.click_labsworkflow.retrofit.APIError;
 import com.click_labs.click_labsworkflow.retrofit.ResponseResolver;
 import com.click_labs.click_labsworkflow.retrofit.RestClient;
+import com.click_labs.click_labsworkflow.util.EndlessRecyclerOnScrollListener;
 import com.click_labs.click_labsworkflow.util.Util;
 import com.click_labs.click_labsworkflow.util.dialog.CustomAlertDialog;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class DasboardActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, AppConstant {
 
     private static int TIMESHEET_ADDED = 100;
-    private RecyclerView rvTimesheet;
+    private RecyclerView rvDashboard;
     private Call retrofitCall;
     private TimeSheetAdapter timeSheetAdapter;
+    private DashboardAdapter dashboardAdapter;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     private Dialog mDialog;
     private FloatingActionButton fabAddNewTimesheet;
     private NavigationView navigationView;
+    private int skip = 0, limit = 10;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,31 +63,34 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
 
-        rvTimesheet = (RecyclerView) findViewById(R.id.rv_timesheet);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        rvDashboard = (RecyclerView) findViewById(R.id.rv_timesheet);
+        rvDashboard.setLayoutManager(linearLayoutManager);
         fabAddNewTimesheet = (FloatingActionButton) findViewById(R.id.fab_add_timeshhet);
         fabAddNewTimesheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent addNewTimesheetintent = new Intent(HomeActivity.this, AddTimesheetActivity.class);
-                if (Util.isNetworkAvailable(HomeActivity.this)) {
+                final Intent addNewTimesheetintent = new Intent(DasboardActivity.this, AddTimesheetActivity.class);
+                if (Util.isNetworkAvailable(DasboardActivity.this)) {
                     startActivityForResult(addNewTimesheetintent, TIMESHEET_ADDED);
                 } else {
                     if (mDialog != null && mDialog.isShowing()) {
                         mDialog.dismiss();
                     }
-                    mDialog = new CustomAlertDialog.Builder(HomeActivity.this)
+                    mDialog = new CustomAlertDialog.Builder(DasboardActivity.this)
                             .setMessage(R.string.error_internet_not_connected)
                             .setPositiveButton(R.string.text_retry, new CustomAlertDialog.CustomDialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick() {
-                                    if (Util.isNetworkAvailable(HomeActivity.this)) {
+                                    if (Util.isNetworkAvailable(DasboardActivity.this)) {
                                         startActivity(addNewTimesheetintent);
                                     } else {
                                         mDialog.show();
@@ -98,7 +111,7 @@ public class HomeActivity extends AppCompatActivity
         });
 
         if (Util.isNetworkAvailable(this)) {
-            apiHitToGetTimeSheet();
+            setData();
         } else {
             if (mDialog != null && mDialog.isShowing()) {
                 mDialog.dismiss();
@@ -108,8 +121,8 @@ public class HomeActivity extends AppCompatActivity
                     .setPositiveButton(R.string.text_retry, new CustomAlertDialog.CustomDialogInterface.OnClickListener() {
                         @Override
                         public void onClick() {
-                            if (Util.isNetworkAvailable(HomeActivity.this)) {
-                                apiHitToGetTimeSheet();
+                            if (Util.isNetworkAvailable(DasboardActivity.this)) {
+                                setData();
                             } else {
                                 mDialog.show();
                             }
@@ -128,6 +141,55 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    private void setData() {
+        if (CommonData.getUserDesignation().equals(EMPLOYEE)) {
+            apiHitToGetTimeSheet();
+            swipeRefreshLayout.setEnabled(false);
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_home).setTitle("My Dashboard");
+            fabAddNewTimesheet.setVisibility(View.GONE);
+            apiHitToGetDashboardData(skip);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    skip = 0;
+                    if (Util.isNetworkAvailable(DasboardActivity.this)) {
+                        apiHitToGetDashboardData(skip);
+                    } else {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            });
+        }
+    }
+
+    private void apiHitToGetDashboardData(int start) {
+        Log.e("SKIP - LIMIT", start + " " + limit);
+        retrofitCall = RestClient.getApiInterface().getDashboardDetails(CommonData.getAccessToken(), limit, start);
+        swipeRefreshLayout.setRefreshing(true);
+        retrofitCall.enqueue(new ResponseResolver<DashboardResponse>(this, false, true) {
+
+            @Override
+            public void success(DashboardResponse timesheetResponseData) {
+                swipeRefreshLayout.setRefreshing(false);
+                if (skip == 0) {
+
+                    dashboardAdapter = new DashboardAdapter(timesheetResponseData.getData());
+                    rvDashboard.setAdapter(dashboardAdapter);
+                    setScrollListener();
+                } else if (timesheetResponseData.getData().size() >= 0) {
+                    dashboardAdapter.addData(timesheetResponseData.getData());
+                }
+                skip = skip + limit;
+            }
+
+            @Override
+            public void failure(APIError error) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
 
     private void apiHitToGetTimeSheet() {
 
@@ -136,7 +198,7 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void success(TimesheetResponseData timesheetResponseData) {
-                timeSheetAdapter = new TimeSheetAdapter(HomeActivity.this, timesheetResponseData.getData(), new AddTimesheetFragment.OnEditListener() {
+                timeSheetAdapter = new TimeSheetAdapter(DasboardActivity.this, timesheetResponseData.getData(), new AddTimesheetFragment.OnEditListener() {
                     @Override
                     public void onEdit() {
                         apiHitToGetTimeSheet();
@@ -147,17 +209,38 @@ public class HomeActivity extends AppCompatActivity
                         apiHitToGetTimeSheet();
                     }
                 });
-                rvTimesheet.setLayoutManager(linearLayoutManager);
-                rvTimesheet.setAdapter(timeSheetAdapter);
+                rvDashboard.setLayoutManager(linearLayoutManager);
+                rvDashboard.setAdapter(timeSheetAdapter);
             }
 
             @Override
             public void failure(APIError error) {
-
             }
         });
 
 
+    }
+
+
+    /**
+     * set scroll listeners
+     */
+    private void setScrollListener() {
+
+        rvDashboard.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+
+                if (!swipeRefreshLayout.isRefreshing()) {
+                    if (Util.isNetworkAvailable(DasboardActivity.this)) {
+                        apiHitToGetDashboardData(skip);
+                    }
+                } else {
+                    Toast.makeText(DasboardActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
     }
 
     @Override
@@ -211,7 +294,7 @@ public class HomeActivity extends AppCompatActivity
                         @Override
                         public void onClick() {
 
-                            Intent intent = new Intent(HomeActivity.this, SplashActivity.class);
+                            Intent intent = new Intent(DasboardActivity.this, SplashActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     | Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     | Intent.FLAG_ACTIVITY_NEW_TASK);

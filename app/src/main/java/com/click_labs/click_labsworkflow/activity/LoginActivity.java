@@ -87,7 +87,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void success(LoginResponseData loginResponseData) {
                 Toast.makeText(LoginActivity.this, R.string.text_toast_logged_in_succsefull, Toast.LENGTH_SHORT).show();
                 CommonData.saveAccessToken(loginResponseData.getData().getToken());
-                Intent homeActivityIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                CommonData.saveUserDesignation(loginResponseData.getData().getDesignation());
+                Intent homeActivityIntent = new Intent(LoginActivity.this, DasboardActivity.class);
                 startActivity(homeActivityIntent);
                 finish();
 

@@ -62,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (CommonData.getAccessToken() == null) {
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     } else {
-                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        startActivity(new Intent(SplashActivity.this, DasboardActivity.class));
                     }
                     finish();
                 }
